@@ -1,5 +1,4 @@
 # $id$
-
 use ExtUtils::MakeMaker;
 require 5.6.0;
 
@@ -9,10 +8,17 @@ WriteMakefile(
     'DISTNAME'         => "GOBO",
     'ABSTRACT'     => 'Perl library for GO and OBO',
     'AUTHOR'       => 'Chris Mungall <cjm@fruitfly.org>',
-    'VERSION_FROM' => "GOBO/Graph.pm",
+    'VERSION_FROM' => "GOBO.pm",
     'PREREQ_PM'    => {
-        'Moose'           => 0,
+        'AmiGO::Model::Graph'       => 0,
         'DateTime::Format::ISO8601' => 0,
+        'DBIx::Class'               => 0,
+        'Graph'                     => 0,
+        'List::MoreUtils'           => 0,
+        'Lucene'                    => 0,
+        'Moose'                     => 0,
+        'RDF::Redland'              => 0,
+        'Set::Object'               => 0,
     },
     'EXE_FILES'    => [
         qw(
