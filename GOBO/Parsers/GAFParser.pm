@@ -2,6 +2,8 @@ package GOBO::Parsers::GAFParser;
 use Moose;
 use strict;
 extends 'GOBO::Parsers::Parser';
+with 'GOBO::Parsers::GraphParser';
+
 use GOBO::Node;
 use GOBO::Gene;
 use GOBO::Evidence;
@@ -18,10 +20,13 @@ sub parse_header {
         }
         else {
             $self->unshift_line($_);
+            # set the parse_header to 1
+            $self->parsed_header(1);
             return;
         }
     }
-    # odd..
+    # we are still in the header and have reached the end of the file
+    $self->parsed_header(1);
     return;
 }
 
@@ -94,7 +99,10 @@ sub parse_body {
                                 date=>$assocdate,
             );
         if ($geneproduct) {
-            $annot->specific_node($g->noderef($geneproduct));
+            $geneproduct =~ s/\s+//g;
+            if ($geneproduct) {
+                $annot->specific_node($g->noderef($geneproduct));
+            }
         }
         # if >1 taxon supplied, additional taxon specifies target species
         if (@taxa) {
@@ -112,8 +120,11 @@ sub parse_body {
             $annot->negated(1);
         }
         if ($annotxp) {
-            my $xp = GOBO::ClassExpression->parse_idexpr($g,$annotxp);
-            $annot->add_target_differentia($xp);
+            $annotxp =~ s/\s+//g; 
+            if ($annotxp) {
+                my $xp = GOBO::ClassExpression->parse_idexpr($g,$annotxp);
+                $annot->add_target_differentia($xp);
+            }
         }
         $g->add_annotation($annot);
         #push(@{$g->annotations},$annot);

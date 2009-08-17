@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               GOBO
-version:            0.02
+version:            0.03
 abstract:           Perl library for GO and OBO
 author:
     - Chris Mungall <cjm@fruitfly.org>
@@ -11,15 +11,10 @@ configure_requires:
 build_requires:
     ExtUtils::MakeMaker:  0
 requires:
-    AmiGO::Model::Graph:  0
     DateTime::Format::ISO8601:  0
-    DBIx::Class:          0
-    Graph:                0
     List::MoreUtils:      0
-    Lucene:               0
-    Moose:                0
-    RDF::Redland:         0
-    Set::Object:          0
+    Moose:                0.81
+    Test::Deep:           0
 no_index:
     directory:
         - t
